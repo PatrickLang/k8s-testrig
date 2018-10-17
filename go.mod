@@ -1,4 +1,4 @@
-module github.com/Azure/k8s-testrig
+module github.com/Azure/testrig
 
 require (
 	github.com/Azure/azure-sdk-for-go v21.1.0+incompatible
