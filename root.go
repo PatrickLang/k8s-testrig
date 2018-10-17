@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"syscall"
 
-	"github.com/Azure/k8s-testrig/commands"
+	"github.com/Azure/testrig/commands"
 	"github.com/cpuguy83/strongerrors"
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/pkg/errors"

@@ -31,8 +31,8 @@ type kubernetesConfig struct {
 type masterProfile struct {
 	Count          int    `json:"count"`
 	VMSize         string `json:"vmSize"`
-	OSDiskSizeGB   int    `json:"osDiskSizeGB"`
-	StorageProfile string `json:"storageProfile"`
+	OSDiskSizeGB   int    `json:"osDiskSizeGB,omitempty"`
+	StorageProfile string `json:"storageProfile,omitempty"`
 	DNSPrefix      string `json:"dnsPrefix"`
 }
 
@@ -40,8 +40,8 @@ type agentPoolProfile struct {
 	Name                         string `json:"name"`
 	Count                        int    `json:"count"`
 	VMSize                       string `json:"vmSize"`
-	OSDiskSizeGB                 int    `json:"osDiskSizeGB"`
-	StorageProfile               string `json:"storageProfile"`
+	OSDiskSizeGB                 int    `json:"osDiskSizeGB,omitempty"`
+	StorageProfile               string `json:"storageProfile,omitempty"`
 	AcceleratedNetworkingEnabled *bool  `json:"acceleratedNetworkingEnabled"`
 	OSType                       string `json:"osType"`
 	AvailabilityProfile          string `json:"availabilityProfile"`
