@@ -50,13 +50,17 @@ When creating a cluster you can provide your own (public) ssh key or a key pair 
 1. Read service principal from the `AZURE_AUTH_LOCATION`
 2. Receive a bearer token through azure-cli
 
-If method `1` fails (e.g. if the value is unset), then method 2 is attempted.
+If method `1` fails (e.g. if the value is unset), then method `2` is attempted.
 
 To make a service principal suitable for `1`, run:
 
 ```
-az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RESOURCE_GROUP_NAME}"
+az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/${SUBSCRIPTION_ID}"
 ```
+
+*Note*: In the future I hope to support deploying to a user specified resource group.
+This would allow the service principal to be scoped down to a single resource group instead of the whole subscription.
+However today `testrig` creates a resource group per cluster as such it needs a braoder privilege scope.
 
 The output of this should be saved to a file and the file path passed into `testrig` as an environment variable as `AZURE_AUTH_LOCATION`.
 
