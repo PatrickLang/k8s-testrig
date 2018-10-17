@@ -14,16 +14,30 @@ type UserConfig struct {
 	Location     string
 
 	Profile struct {
-		KubernetesVersion string
-		Leader            struct {
+		Kubernetes struct {
+			Version       string
+			NetworkPolicy string
+			NetworkPlugin string
+		}
+		Leader struct {
 			Linux struct {
-				SKU   string
-				Count *int
+				Distro string
+				SKU    string
+				Count  *int
 			}
 		}
 		Agent struct {
-			Linux   AgentNodeConfig
-			Windows AgentNodeConfig
+			Linux struct {
+				Distro              string
+				SKU                 string
+				Count               *int
+				AvailabilityProfile string
+			}
+			Windows struct {
+				SKU                 string
+				Count               *int
+				AvailabilityProfile string
+			}
 		}
 		Auth struct {
 			Linux struct {
@@ -36,13 +50,6 @@ type UserConfig struct {
 			}
 		}
 	}
-}
-
-// AgentNodeConfig is used to configure an agent node pool.
-// It's used by UserConfig
-type AgentNodeConfig struct {
-	SKU   string
-	Count *int
 }
 
 // ReadUserConfig reads the config from the provided path

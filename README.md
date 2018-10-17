@@ -99,22 +99,35 @@ By default, `testrig` will look in `~/.testrig/config.toml` (or equiv home dir o
 The config should be in toml format, with the following struct definition:
 
 ```go
-// UserConfig represents the user configuration read from a config file
 type UserConfig struct {
 	Subscription string
 	Location     string
 
 	Profile struct {
-		KubernetesVersion string
-		Leader            struct {
+		Kubernetes struct {
+			Version       string
+			NetworkPolicy string
+			NetworkPlugin string
+		}
+		Leader struct {
 			Linux struct {
-				SKU   string
-				Count *int
+				Distro string
+				SKU    string
+				Count  *int
 			}
 		}
 		Agent struct {
-			Linux   AgentNodeConfig
-			Windows AgentNodeConfig
+			Linux struct {
+				Distro              string
+				SKU                 string
+				Count               *int
+				AvailabilityProfile string
+			}
+			Windows struct {
+				SKU                 string
+				Count               *int
+				AvailabilityProfile string
+			}
 		}
 		Auth struct {
 			Linux struct {
@@ -128,13 +141,6 @@ type UserConfig struct {
 		}
 	}
 }
-
-// AgentNodeConfig is used to configure an agent node pool.
-// It's used by UserConfig
-type AgentNodeConfig struct {
-	SKU   string
-	Count *int
-}
 ```
 
 Example Config:
@@ -143,9 +149,10 @@ Example Config:
 Location = "centralus"
 
 [profile]
-  KubernetesVersion = "1.11"
-			[profile.leader.linux]
-				count = 1
+  [kubernetes]
+    version = "1.11"
+  [profile.leader.linux]
+    count = 1
 ```
 
 Tabs or spaces, capitalization, doesn't matter.

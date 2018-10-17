@@ -73,10 +73,12 @@ func Create(ctx context.Context, stateDir string, cfg *UserConfig) *cobra.Comman
 	p := m.Properties
 	flags.IntVar(&p.MasterProfile.Count, "linux-leader-count", p.MasterProfile.Count, "Number of nodes for the Kubernetes leader pool")
 	flags.StringVar(&p.MasterProfile.VMSize, "linux-leader-node-sku", p.MasterProfile.VMSize, "VM SKU for leader nodes")
+	flags.StringVar(&p.MasterProfile.Distro, "linux-leader-distro", p.MasterProfile.Distro, "Linux distribution for linux leader nodes")
 
 	flags.IntVar(&p.AgentPoolProfiles[0].Count, "linux-agent-count", p.AgentPoolProfiles[0].Count, "Number of Linux nodes for the Kubernetes agent/worker pools")
 	flags.StringVar(&p.AgentPoolProfiles[0].VMSize, "linux-agent-node-sku", p.AgentPoolProfiles[0].VMSize, "VM SKU for Linux agent nodes")
 	flags.StringVar(&p.AgentPoolProfiles[0].AvailabilityProfile, "linux-agent-availability-profile", p.AgentPoolProfiles[0].AvailabilityProfile, "Availabiltiy profile for Linux agent nodes")
+	flags.StringVar(&p.AgentPoolProfiles[0].Distro, "linux-agent-distro", p.AgentPoolProfiles[0].Distro, "Linux distribution for linux agent nodes")
 
 	flags.IntVar(&p.AgentPoolProfiles[1].Count, "windows-agent-count", p.AgentPoolProfiles[1].Count, "Number of Windows nodes for the Kubernetes agent/worker pools")
 	flags.StringVar(&p.AgentPoolProfiles[1].VMSize, "windows-agent-node-sku", p.AgentPoolProfiles[1].VMSize, "VM SKU for Windows agent nodes")

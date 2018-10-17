@@ -11,8 +11,8 @@ type properties struct {
 	OrchestratorProfile *orchestratorProfile `json:"orchestratorProfile"`
 	MasterProfile       *masterProfile       `json:"masterProfile"`
 	AgentPoolProfiles   []agentPoolProfile   `json:"agentPoolProfiles"`
-	LinuxProfile        *linuxProfile        `json:"linuxProfile"`
-	WindowsProfile      *windowsProfile      `json:"windowsProfile"`
+	LinuxProfile        *linuxProfile        `json:"linuxProfile,omitempty"`
+	WindowsProfile      *windowsProfile      `json:"windowsProfile",omitempty`
 }
 
 type orchestratorProfile struct {
@@ -22,10 +22,10 @@ type orchestratorProfile struct {
 }
 
 type kubernetesConfig struct {
-	UseManagedIdentity bool   `json:"useManagedIdentity"`
-	NetworkPlugin      string `json:"networkPlugin"`
-	NetworkPolicy      string `json:"networkPolicy"`
-	ContainerRuntime   string `json:"containerRuntime"`
+	UseManagedIdentity bool   `json:"useManagedIdentity,omitempty"`
+	NetworkPlugin      string `json:"networkPlugin,omitempty"`
+	NetworkPolicy      string `json:"networkPolicy,omitempty"`
+	ContainerRuntime   string `json:"containerRuntime,omitempty"`
 }
 
 type masterProfile struct {
@@ -34,6 +34,7 @@ type masterProfile struct {
 	OSDiskSizeGB   int    `json:"osDiskSizeGB,omitempty"`
 	StorageProfile string `json:"storageProfile,omitempty"`
 	DNSPrefix      string `json:"dnsPrefix"`
+	Distro         string `json:"distro,omitempty"`
 }
 
 type agentPoolProfile struct {
@@ -42,9 +43,10 @@ type agentPoolProfile struct {
 	VMSize                       string `json:"vmSize"`
 	OSDiskSizeGB                 int    `json:"osDiskSizeGB,omitempty"`
 	StorageProfile               string `json:"storageProfile,omitempty"`
-	AcceleratedNetworkingEnabled *bool  `json:"acceleratedNetworkingEnabled"`
+	AcceleratedNetworkingEnabled *bool  `json:"acceleratedNetworkingEnabled,omitempty"`
 	OSType                       string `json:"osType"`
-	AvailabilityProfile          string `json:"availabilityProfile"`
+	AvailabilityProfile          string `json:"availabilityProfile,omitempty"`
+	Distro                       string `json:"distro,omitempty"`
 }
 
 type linuxProfile struct {
@@ -179,8 +181,14 @@ func overrideModelDefaults(m *apiModel, cfg *UserConfig) error {
 		m.Properties.WindowsProfile.AdminPassword = string(pData)
 	}
 
-	if cfg.Profile.KubernetesVersion != "" {
-		m.Properties.OrchestratorProfile.OrchestratorRelease = cfg.Profile.KubernetesVersion
+	if cfg.Profile.Kubernetes.Version != "" {
+		m.Properties.OrchestratorProfile.OrchestratorRelease = cfg.Profile.Kubernetes.Version
+	}
+	if cfg.Profile.Kubernetes.NetworkPlugin != "" {
+		m.Properties.OrchestratorProfile.KubernetesConfig.NetworkPlugin = cfg.Profile.Kubernetes.NetworkPlugin
+	}
+	if cfg.Profile.Kubernetes.NetworkPolicy != "" {
+		m.Properties.OrchestratorProfile.KubernetesConfig.NetworkPolicy = cfg.Profile.Kubernetes.NetworkPolicy
 	}
 
 	return nil
