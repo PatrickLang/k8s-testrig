@@ -1,6 +1,13 @@
-# azure-k8s-testrig
+# testrig
 
 `testrig` makes spinning up and managing test Kubernetes clusters on Azure simple.
+
+
+### Status
+
+This is a new project and changes are still happening.
+Flag names and the user config format are not totally set in stone and may change.
+Additionally the master branch may see some changes which break the build.
 
 ### Usage:
 ```
