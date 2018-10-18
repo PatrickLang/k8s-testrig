@@ -65,6 +65,7 @@ type sshConfig struct {
 
 type sshKey struct {
 	KeyData string `json:"keyData"`
+	keyFile string
 }
 
 type apiModel struct {
@@ -167,7 +168,11 @@ func overrideModelDefaults(m *apiModel, cfg *UserConfig) error {
 		if err != nil {
 			return errors.Wrap(err, "error reading user supplied linux public ssh key file")
 		}
-		m.Properties.LinuxProfile.SSH.PublicKeys = append(m.Properties.LinuxProfile.SSH.PublicKeys, sshKey{KeyData: string(keyData)})
+		m.Properties.LinuxProfile.SSH.PublicKeys = append(m.Properties.LinuxProfile.SSH.PublicKeys,
+			sshKey{
+				KeyData: string(keyData),
+				keyFile: cfg.Profile.Auth.Linux.PublicKeyFile,
+			})
 	}
 
 	if cfg.Profile.Auth.Windows.User != "" {
@@ -190,6 +195,5 @@ func overrideModelDefaults(m *apiModel, cfg *UserConfig) error {
 	if cfg.Profile.Kubernetes.NetworkPolicy != "" {
 		m.Properties.OrchestratorProfile.KubernetesConfig.NetworkPolicy = cfg.Profile.Kubernetes.NetworkPolicy
 	}
-
 	return nil
 }

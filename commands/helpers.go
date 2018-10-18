@@ -64,24 +64,23 @@ func (s *sshConfig) Set(p string) error {
 	if err != nil {
 		return errors.Wrap(err, "error reading ssh key data")
 	}
-	s.PublicKeys = append(s.PublicKeys, sshKey{KeyData: string(b)})
+	s.PublicKeys = append(s.PublicKeys, sshKey{KeyData: string(b), keyFile: p})
 	return nil
 }
 
 func (s *sshConfig) String() string {
 	var b strings.Builder
 	for i, k := range s.PublicKeys {
-		data := k.KeyData
+		b.WriteString(k.keyFile)
 		if i < len(s.PublicKeys)-1 {
-			data += "\n\n"
+			b.WriteString(", ")
 		}
-		b.WriteString(data)
 	}
 	return b.String()
 }
 
 func (s *sshConfig) Type() string {
-	return "sshKey"
+	return "publicKeyPath"
 }
 
 func createSSHKey(keyW io.Writer) (string, error) {
