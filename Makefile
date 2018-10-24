@@ -14,7 +14,7 @@ clean:
 
 .PHONY: build
 build: ## Build binary
-	GOMODULES=1 go build -o bin/testrig
+	GO111MODULE=on go build -o bin/testrig
 
 .PHONY: install
 install: ## Install binary
