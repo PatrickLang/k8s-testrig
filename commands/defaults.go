@@ -22,10 +22,12 @@ type orchestratorProfile struct {
 }
 
 type kubernetesConfig struct {
-	UseManagedIdentity bool   `json:"useManagedIdentity,omitempty"`
-	NetworkPlugin      string `json:"networkPlugin,omitempty"`
-	NetworkPolicy      string `json:"networkPolicy,omitempty"`
-	ContainerRuntime   string `json:"containerRuntime,omitempty"`
+	UseManagedIdentity   bool   `json:"useManagedIdentity,omitempty"`
+	NetworkPlugin        string `json:"networkPlugin,omitempty"`
+	NetworkPolicy        string `json:"networkPolicy,omitempty"`
+	ContainerRuntime     string `json:"containerRuntime,omitempty"`
+	KubernetesImageBase  string `json:"kubernetesImageBase,omitempty"`
+	CustomHyperkubeImage string `json:"customHyperkubeImage,omitempty"`
 }
 
 type masterProfile struct {
@@ -194,6 +196,9 @@ func overrideModelDefaults(m *apiModel, cfg *UserConfig) error {
 	}
 	if cfg.Profile.Kubernetes.NetworkPolicy != "" {
 		m.Properties.OrchestratorProfile.KubernetesConfig.NetworkPolicy = cfg.Profile.Kubernetes.NetworkPolicy
+	}
+	if cfg.Profile.Kubernetes.CustomBinaries.HyperkubeImage != "" {
+		m.Properties.OrchestratorProfile.KubernetesConfig.CustomHyperkubeImage = cfg.Profile.Kubernetes.CustomBinaries.HyperkubeImage
 	}
 	return nil
 }

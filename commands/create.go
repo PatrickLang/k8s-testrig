@@ -89,6 +89,7 @@ func Create(ctx context.Context, stateDir string, cfg *UserConfig) *cobra.Comman
 	flags.StringVar(&p.OrchestratorProfile.KubernetesConfig.NetworkPolicy, "network-policy", p.OrchestratorProfile.KubernetesConfig.NetworkPolicy, "Network policy to use for the cluster")
 
 	flags.StringVar(&p.OrchestratorProfile.OrchestratorRelease, "kubernetes-version", p.OrchestratorProfile.OrchestratorRelease, "Specify the Kubernetes version")
+	flags.StringVar(&p.OrchestratorProfile.KubernetesConfig.CustomHyperkubeImage, "linux-hyperkube-image", p.OrchestratorProfile.KubernetesConfig.CustomHyperkubeImage, "Specify a custom hyperkube image to use, this is the full repo url + image name + tag")
 
 	flags.StringVarP(&p.LinuxProfile.AdminUsername, "user", "u", p.LinuxProfile.AdminUsername, "Username for SSH access to nodes")
 	flags.Var(&p.LinuxProfile.SSH, "ssh-key", "Public SSH key to install as an authorized key on cluster nodes")

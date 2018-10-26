@@ -15,9 +15,12 @@ type UserConfig struct {
 
 	Profile struct {
 		Kubernetes struct {
-			Version       string
-			NetworkPolicy string
-			NetworkPlugin string
+			Version        string
+			NetworkPolicy  string
+			NetworkPlugin  string
+			CustomBinaries struct {
+				HyperkubeImage string
+			}
 		}
 		Leader struct {
 			Linux struct {
