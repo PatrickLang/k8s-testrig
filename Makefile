@@ -14,7 +14,7 @@ clean:
 
 .PHONY: build
 build: ## Build binary
-	GO111MODULE=on go build -o bin/testrig
+	CGO_ENABLED=0 GO111MODULE=on go build -tags netgo -o bin/testrig
 
 .PHONY: install
 install: ## Install binary
