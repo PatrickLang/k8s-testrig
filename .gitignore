@@ -4,6 +4,8 @@
 *.dll
 *.so
 *.dylib
+testrig
+bin/
 
 # Test binary, build with `go test -c`
 *.test
@@ -11,5 +13,8 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
-testrig
-bin/
+# Build outputs
+translations/
+
+# Temporary files from Windows Remote Desktop
+*.rdp
