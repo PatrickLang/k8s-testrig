@@ -1,9 +1,9 @@
 package commands
-
 import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"os"
@@ -176,6 +176,8 @@ func runCreate(ctx context.Context, name string, opts createOpts, in io.Reader, 
 		return err
 	}
 
+	fmt.Printf("Created state directory: %v\n", dir)
+
 	if len(opts.Model.Properties.LinuxProfile.SSH.PublicKeys) == 0 {
 		keyPath := filepath.Join(dir, "id_rsa")
 		f, err := os.OpenFile(keyPath, os.O_CREATE|os.O_TRUNC|os.O_WRONLY, 0600)
@@ -224,6 +226,9 @@ func runCreate(ctx context.Context, name string, opts createOpts, in io.Reader, 
 	if err := writeState(dir, s); err != nil {
 		return err
 	}
+
+	fmt.Printf("Running acs-engine generate...\n")
+
 	cmd := exec.CommandContext(ctx, opts.ACSEnginePath, "generate",
 		"--output-directory", filepath.Join(dir, "_output"),
 		"--api-model", modelPath,
@@ -244,6 +249,8 @@ func runCreate(ctx context.Context, name string, opts createOpts, in io.Reader, 
 	if err != nil {
 		return err
 	}
+
+	fmt.Printf("Creating resource group: %v\n", dnsName)
 
 	gClient := resources.NewGroupsClient(opts.SubscriptionID)
 	if err != nil {
